@@ -1,0 +1,38 @@
+{
+  "updated_at": "2026-05-02T21:36:40.998869",
+  "token": {
+    "name": "Fundiora",
+    "symbol": "FUND",
+    "address": "0xa02d9a9a5f5453463aa4855f62e47d9cc27086d9",
+    "decimals": 18,
+    "price_usd": 2.680249321e-05,
+    "fdv": 24122.2438905687,
+    "market_cap": null,
+    "total_reserve_usd": 13533.655502130892,
+    "total_supply": 1000000000.0,
+    "volume_24h": 0.0,
+    "pool_count": 1
+  },
+  "pool": {
+    "address": "0xdb5df2ee10219015b207b055828076d9366d7fdb",
+    "name": "FUND / WETH 0.3%",
+    "reserve_usd": 15089.2929,
+    "base_price": 2.6802493211743e-05,
+    "quote_price": 2307.39,
+    "volume_24h": 48.8697803358,
+    "volume_6h": 48.8697803358,
+    "txns_24h": {
+      "buys": 0,
+      "sells": 2,
+      "buyers": 0,
+      "sellers": 2
+    },
+    "txns_6h": {
+      "buys": 0,
+      "sells": 2,
+      "buyers": 0,
+      "sellers": 2
+    },
+    "price_change_24h": -0.241
+  }
+}

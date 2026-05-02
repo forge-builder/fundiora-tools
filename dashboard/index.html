@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fundiora Live Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <span class="logo-icon">&#9889;</span>
+        <div>
+          <h1>FUNDIORA</h1>
+          <p class="sub">$FUND Live Monitor</p>
+        </div>
+      </div>
+      <div class="status">
+        <span class="dot online"></span>
+        <span id="last-update">--:--:--</span>
+      </div>
+    </header>
+
+    <section class="top-bar">
+      <div class="pair-info">
+        <span class="label">Pair</span>
+        <span class="value">FUND / USDC</span>
+        <span class="badge">Base</span>
+      </div>
+      <div class="pair-info">
+        <span class="label">Dex</span>
+        <span class="value">Uniswap v2</span>
+        <a href="https://app.uniswap.org/#/swap?outputCurrency=0xa02d9a9a5f5453463aa4855f62e47d9cc27086d9&chain=base" target="_blank" class="link">Buy &#8599;</a>
+      </div>
+      <div class="pair-info">
+        <span class="label">Contract</span>
+        <span class="value mono">0xa02d...86d9</span>
+        <a href="https://basescan.org/token/0xa02d9a9a5f5453463aa4855f62e47d9cc27086d9" target="_blank" class="link">BaseScan &#8599;</a>
+      </div>
+    </section>
+
+    <section class="metrics">
+      <div class="card price">
+        <span class="label">Price</span>
+        <span class="value big" id="price">$0.0000</span>
+        <span class="change" id="price-change">--</span>
+      </div>
+      <div class="card">
+        <span class="label">Liquidity</span>
+        <span class="value" id="liquidity">$0</span>
+        <span class="sub" id="liq-pct">--</span>
+      </div>
+      <div class="card">
+        <span class="label">Market Cap</span>
+        <span class="value" id="mcap">$0</span>
+        <span class="sub" id="fdv">FDV: --</span>
+      </div>
+      <div class="card">
+        <span class="label">24h Volume</span>
+        <span class="value" id="volume">$0</span>
+        <span class="sub" id="vol-change">--</span>
+      </div>
+      <div class="card">
+        <span class="label">Holders</span>
+        <span class="value" id="holders">--</span>
+        <span class="sub" id="holder-change">--</span>
+      </div>
+      <div class="card">
+        <span class="label">24h Txns</span>
+        <span class="value" id="txns">--</span>
+        <span class="sub" id="txn-change">buys / sells: --</span>
+      </div>
+    </section>
+
+    <section class="chart-section">
+      <div class="chart-controls">
+        <span class="label">Price History</span>
+        <div class="intervals">
+          <button class="interval active" data-i="1h">1H</button>
+          <button class="interval" data-i="6h">6H</button>
+          <button class="interval" data-i="24h">24H</button>
+          <button class="interval" data-i="7d">7D</button>
+          <button class="interval" data-i="30d">30D</button>
+        </div>
+      </div>
+      <div id="chart-wrap">
+        <svg id="chart" viewBox="0 0 800 300" preserveAspectRatio="none"></svg>
+        <div id="chart-overlay">Loading...</div>
+      </div>
+      <div class="chart-legend">
+        <span id="chart-high">High: --</span>
+        <span id="chart-low">Low: --</span>
+        <span id="chart-range">Range: --</span>
+      </div>
+    </section>
+
+    <section class="bottom">
+      <div class="card wide">
+        <span class="label">Pool Reserves</span>
+        <div class="reserves">
+          <div class="reserve">
+            <span class="token">FUND</span>
+            <span class="amount" id="reserve-base">--</span>
+          </div>
+          <div class="reserve">
+            <span class="token">USDC</span>
+            <span class="amount" id="reserve-quote">--</span>
+          </div>
+        </div>
+      </div>
+      <div class="card wide">
+        <span class="label">Price Impact Est.</span>
+        <div class="impacts">
+          <div class="impact">
+            <span class="amt">$50</span>
+            <span class="pct" id="impact-50">--</span>
+          </div>
+          <div class="impact">
+            <span class="amt">$100</span>
+            <span class="pct" id="impact-100">--</span>
+          </div>
+          <div class="impact">
+            <span class="amt">$500</span>
+            <span class="pct" id="impact-500">--</span>
+          </div>
+          <div class="impact">
+            <span class="amt">$1000</span>
+            <span class="pct" id="impact-1000">--</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Built by Hermes Agent &middot; Mac Mini M4 Pro &middot; Data: DexScreener</span>
+      <a href="https://fundiora.com" target="_blank">fundiora.com</a>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
