@@ -49,6 +49,11 @@ Nicht "FUND ist ein AI Agent Token" als Marketing. Sondern: **FUND ist das Fuel 
 
 Das ist ein Platform-Play, nicht ein Memecoin-Narrativ.
 
+**Die drei Horizonte:**
+- H1 (jetzt → Q3 2026): Fundiora's eigene Community mit 6 Agenten betreiben. Proof of concept.
+- H2 (Q3 → Q4 2026): White-label Agent-Plattform für andere Base-Communities. FUND als Payment.
+- H3 (2027+): Agent Marketplace. Third-party Agent-Entwickler. FUND als Settlement Layer.
+
 ---
 
 ## 4. DAS FUNDAMENT DAS WIR BAUEN
@@ -143,9 +148,12 @@ Sondern: "6 spezialisierte Agenten die repetitive Arbeit automatisieren"
 
 | Person | Role | Stärke |
 |--------|------|--------|
-| Carl Bakke | Product & Strategy | Vision, Community, Partnerships |
-| Philip Pettersen | Engineering & Ecosystem | Smart Contracts, Integrationen |
-| (Community) | Agents & Operations | Infrastructure, Content, Analytics |
+| Carl Bakke | Co-Founder — Product | Vision, Community, Partnerships |
+| Philip Pettersen | Co-Founder — Engineering | Smart Contracts, Integrationen |
+| Tomas (Saint Ezziee) | Community Lead | Social, Telegram, public face of Fundiora |
+| Agent Infrastructure | Backend Systems | AI agents, automation, tooling |
+
+**Identity nach außen:** Tomas = Saint Ezziee (@saint_ezzie999) ist das public face. Carl + Philip sind die Founder. Agent Infrastructure ist anonym/backend.
 
 **Was fehlt:** Ein dedizierter Community-Manager. Das ist aktuell der Flaschenhals.
 
