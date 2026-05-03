@@ -392,7 +392,7 @@ h1 .green { color: var(--green); }
 .roadmap-tasks li.done { background: rgba(55,245,154,0.1); border-color: rgba(55,245,154,0.3); color: var(--green); }
 
 /* ===== TEAM ===== */
-.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .team-card {
   background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-md);
   padding: 24px 18px; text-align: center;
@@ -682,7 +682,7 @@ h1 .green { color: var(--green); }
             </div>
           </div>
           <div class="horizon">
-            <div class="horizon-num" style="background:var(--green-soft);border:1px solid rgba(55,245,154,.3);color:var(--green)">H2</div>
+            <div class="horizon-num" style="background:var(--green-soft);border:1px solid rgba(48,176,64,.3);color:var(--green)">H2</div>
             <div>
               <h4>Platform (Q3 → Q4 2026)</h4>
               <p>Open the agent infrastructure as a white-label product for other Base communities. Any token can deploy Fundiora's agent stack, paying in FUND for access. FUND becomes infrastructure for the Base ecosystem.</p>
@@ -914,6 +914,26 @@ h1 .green { color: var(--green); }
   </div>
 </section>
 
+<!-- ===== DASHBOARD SECTION ===== -->
+<section id="dashboard" style="background:var(--bg);padding:100px 0;">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="divider"></div>
+      <div class="section-label">Live Dashboard</div>
+      <h2 class="section-title">Real-Time.<br>On-Chain. Always On.</h2>
+      <p class="section-sub">The Fundiora dashboard tracks FUND price, liquidity, yield eligibility, and whale activity — updated every 5 minutes directly from Base.</p>
+    </div>
+    <div class="reveal" style="margin-top:40px;border-radius:16px;overflow:hidden;border:1px solid rgba(48,176,64,0.3);box-shadow:0 0 40px rgba(48,176,64,0.1);">
+      <iframe src="../dashboard/index.html" width="100%" height="520" style="border:none;display:block;background:#07101a;" title="Fundiora Live Dashboard"></iframe>
+    </div>
+    <div style="display:flex;gap:16px;justify-content:center;margin-top:24px;flex-wrap:wrap;" class="reveal">
+      <a href="../dashboard/index.html" target="_blank" style="background:rgba(48,176,64,0.15);border:1px solid rgba(48,176,64,0.4);color:var(--green);padding:10px 20px;border-radius:8px;font-size:0.85rem;text-decoration:none;">Open Full Dashboard</a>
+      <a href="https://fundiora.com" target="_blank" style="background:rgba(0,179,255,0.1);border:1px solid rgba(0,179,255,0.3);color:var(--blue);padding:10px 20px;border-radius:8px;font-size:0.85rem;text-decoration:none;">fundiora.com</a>
+      <a href="https://geckoterminal.com/base/pools/0xdb5df2ee10219015b207b055828076d9366d7fdb" target="_blank" style="background:rgba(192,64,176,0.1);border:1px solid rgba(192,64,176,0.3);color:var(--purple);padding:10px 20px;border-radius:8px;font-size:0.85rem;text-decoration:none;">GeckoTerminal</a>
+    </div>
+  </div>
+</section>
+
 <!-- ===== TOKENOMICS ===== -->
 <section id="tokenomics">
   <div class="container">
@@ -1125,8 +1145,16 @@ h1 .green { color: var(--green); }
       <div class="team-card">
         <div class="team-avatar" style="color:var(--blue)">TE</div>
         <h3>Tomas — Saint Ezziee</h3>
-        <div class="team-role">Community Lead</div>
-        <p class="team-bio">Germany. Community growth, Telegram coordination, social media, and holder engagement. Public face of Fundiora.</p>
+        <div class="team-role">Community Lead & Agent Infrastructure</div>
+        <p class="team-bio">Germany. Elektriker turned crypto entrepreneur. Public face of Fundiora. Running the AI agent infrastructure on a Mac Mini M4 Pro. Germany's Base. 3-4 X posts/week about crypto and AI agents.</p>
+        <a href="https://x.com/saint_ezziee999" target="_blank">@saint_ezziee999 →</a>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar" style="color:var(--purple)">HN</div>
+        <h3>Hunshø</h3>
+        <div class="team-role">Content Manager</div>
+        <p class="team-bio">Social content lead. X 1-2x/day, Instagram 3-5x/week, daily Telegram updates. Outreach and community engagement across all channels.</p>
       </div>
 
       <div class="team-card">

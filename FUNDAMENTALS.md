@@ -148,9 +148,11 @@ Sondern: "6 spezialisierte Agenten die repetitive Arbeit automatisieren"
 
 | Person | Role | Stärke |
 |--------|------|--------|
-| Carl Bakke | Co-Founder — Product | Vision, Community, Partnerships |
-| Philip Pettersen | Co-Founder — Engineering | Smart Contracts, Integrationen |
-| Tomas (Saint Ezziee) | Community Lead | Social, Telegram, public face of Fundiora |
+| **Carl Bakke** | Co-Founder Product | Website, credibility, investor relations |
+| **Philip Pettersen** | Co-Founder Engineering | Execution lead, TokPie, overall direction |
+| **Tomas (Saint Ezziee)** | Community Lead | AI/agent concepts, X content (3-4x/week), Germany's Base |
+| **Hunshø** | Content Manager | X 1-2x/day, Insta 3-5x/week, daily Telegram, outreach |
+| **C** | Advisor | Pulled from active ops (May 2026), still holder |
 | Agent Infrastructure | Backend Systems | AI agents, automation, tooling |
 
 **Identity nach außen:** Tomas = Saint Ezziee (@saint_ezzie999) ist das public face. Carl + Philip sind die Founder. Agent Infrastructure ist anonym/backend.
