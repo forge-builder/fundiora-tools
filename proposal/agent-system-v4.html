@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Fundiora Agent System — 6 AI agents powering the next generation of community-driven crypto on Base">
+<meta property="og:title" content="Fundiora Agent System v4 — Built on Base">
+<meta property="og:description" content="Real agents. Real utility. Real community. The infrastructure layer for $FUND.">
+<title>Fundiora Agent System — Investor Proposal v4</title>
+<style>
+/* ===== RESET & BASE ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#06060c;--bg2:#0a0a14;--bg3:#0f0f1a;--card:#111122;
+  --border:#1e1e35;--border2:#2a2a45;
+  --text:#e8e8f5;--muted:#6b7280;--dim:#3a3a55;
+  --blue:#00d4ff;--blue-dim:#007a99;--purple:#7b2fff;--purple-dim:#4a1a99;
+  --green:#10b981;--red:#ef4444;--amber:#f59e0b;
+  --glow:0 0 30px rgba(0,212,255,.25);
+  --glow-strong:0 0 60px rgba(0,212,255,.5),0 0 120px rgba(123,47,255,.25);
+  --glass:rgba(15,15,30,.7);--radius:12px;--radius-sm:8px;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  line-height:1.65;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* ===== CANVAS BG ===== */
+#bg-canvas{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;opacity:.6;
+}
+
+/* ===== MESH GRADIENT OVERLAY ===== */
+.mesh-bg{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%,rgba(123,47,255,.12)0%,transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 80%,rgba(0,212,255,.08)0%,transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 50%,rgba(0,212,255,.04)0%,transparent 70%);
+  animation:meshPulse 12s ease-in-out infinite;
+}
+@keyframes meshPulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.7;transform:scale(1.05)}
+}
+
+/* ===== LAYOUT ===== */
+.container{
+  position:relative;z-index:1;
+  max-width:1100px;margin:0 auto;padding:0 24px;
+}
+section{padding:100px 0;border-bottom:1px solid var(--border)}
+section:last-child{border-bottom:none}
+
+/* ===== NAV ===== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(6,6,12,.85);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 24px;height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.1rem;color:var(--blue)}
+.nav-logo svg{width:28px;height:28px}
+.nav-links{display:flex;gap:28px}
+.nav-links a{
+  color:var(--muted);text-decoration:none;font-size:.9rem;
+  font-weight:500;transition:color .2s;letter-spacing:.3px;
+}
+.nav-links a:hover{color:var(--blue)}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:120px 0 80px;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-200px;left:50%;transform:translateX(-50%);
+  width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,255,.12)0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-left .badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);
+  color:var(--blue);padding:6px 14px;border-radius:99px;
+  font-size:.78rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;
+  margin-bottom:24px;
+}
+.badge-dot{
+  width:6px;height:6px;background:var(--blue);border-radius:50%;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.hero-left h1{
+  font-family:'Orbitron',monospace;font-size:clamp(2.4rem,5vw,4rem);
+  font-weight:800;line-height:1.1;letter-spacing:-1px;
+  margin-bottom:20px;
+}
+h1 .accent{color:var(--blue);text-shadow:var(--glow)}
+h1 .purple{color:var(--purple)}
+
+.hero-left p.tagline{
+  font-size:1.15rem;color:var(--muted);margin-bottom:36px;
+  max-width:480px;line-height:1.7;
+}
+
+.live-ticker{
+  background:var(--card);border:1px solid var(--border2);
+  border-radius:var(--radius);padding:20px 24px;
+  margin-bottom:32px;display:inline-block;
+}
+.ticker-label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.ticker-price{font-size:2rem;font-weight:700;color:var(--blue);font-family:'Space Grotesk',monospace}
+.ticker-meta{display:flex;gap:20px;margin-top:8px}
+.ticker-meta span{font-size:.82rem;color:var(--muted)}
+.ticker-meta span strong{color:var(--text)}
+
+/* ===== HERO RIGHT — GENERATIVE LOGO ===== */
+.hero-right{display:flex;align-items:center;justify-content:center;position:relative}
+.logo-wrap{
+  position:relative;width:320px;height:320px;
+  display:flex;align-items:center;justify-content:center;
+}
+.logo-glow{
+  position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,212,255,.15)0%,transparent 70%);
+  animation:logoGlow 4s ease-in-out infinite;
+}
+@keyframes logoGlow{
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.15);opacity:.7}
+}
+.logo-svg{width:220px;height:220px;filter:drop-shadow(0 0 20px rgba(0,212,255,.4))}
+.hex-ring{
+  position:absolute;inset:0;
+  animation:hexRotate 30s linear infinite;
+}
+@keyframes hexRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* ===== CTA BUTTONS ===== */
+.btn-group{display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 28px;border-radius:var(--radius);
+  font-weight:600;font-size:.95rem;text-decoration:none;
+  transition:all .25s;cursor:pointer;border:none;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  color:#000;box-shadow:0 0 30px rgba(0,212,255,.3);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(0,212,255,.5)}
+.btn-outline{
+  background:transparent;border:1px solid var(--border2);
+  color:var(--text);
+}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue)}
+
+/* ===== SECTION HEADERS ===== */
+.section-label{
+  font-size:.75rem;text-transform:uppercase;letter-spacing:2px;
+  color:var(--blue);font-weight:700;margin-bottom:12px;
+}
+.section-title{
+  font-family:'Orbitron',monospace;font-size:clamp(1.8rem,3.5vw,2.8rem);
+  font-weight:800;margin-bottom:16px;line-height:1.2;
+}
+.section-sub{
+  font-size:1.05rem;color:var(--muted);max-width:580px;
+  line-height:1.75;
+}
+.section-header{margin-bottom:56px}
+
+/* ===== METRICS GRID ===== */
+.metrics-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+  margin-bottom:48px;
+}
+.metric-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:24px 20px;
+  text-align:center;transition:all .3s;
+}
+.metric-card:hover{border-color:var(--blue);box-shadow:var(--glow)}
+.metric-value{
+  font-size:1.6rem;font-weight:800;font-family:'Space Grotesk',monospace;
+  color:var(--blue);margin-bottom:4px;
+}
+.metric-label{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.metric-sub{font-size:.75rem;color:var(--dim);margin-top:4px}
+
+/* ===== HONESTY GRID ===== */
+.honesty-section{background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%)}
+.honesty-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:32px;
+}
+.honesty-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:32px;
+}
+.honesty-card .card-icon{
+  width:48px;height:48px;border-radius:var(--radius-sm);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;font-size:1.5rem;
+}
+.icon-warn{background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3)}
+.icon-info{background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3)}
+.icon-good{background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.3)}
+.honesty-card h3{font-size:1.1rem;font-weight:700;margin-bottom:12px}
+.honesty-card p{font-size:.92rem;color:var(--muted);line-height:1.7}
+.honesty-card ul{
+  list-style:none;margin-top:12px;
+  display:flex;flex-direction:column;gap:8px;
+}
+.honesty-card li{font-size:.9rem;color:var(--muted);padding-left:16px;position:relative}
+.honesty-card li::before{
+  content:'→';position:absolute;left:0;color:var(--blue);
+}
+
+/* ===== VISION ===== */
+.vision-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;
+}
+.vision-text h3{font-size:1.3rem;font-weight:700;margin-bottom:12px;color:var(--blue)}
+.vision-text p{color:var(--muted);line-height:1.8;margin-bottom:16px;font-size:.95rem}
+.vision-visual{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:32px;
+}
+.cycle-diagram{
+  display:flex;flex-direction:column;gap:12px;
+}
+.cycle-item{
+  display:flex;align-items:center;gap:16px;
+  padding:14px 18px;background:var(--bg2);
+  border-radius:var(--radius-sm);border:1px solid var(--border);
+  font-size:.9rem;
+}
+.cycle-item .dot{
+  width:10px;height:10px;border-radius:50%;flex-shrink:0;
+}
+.cycle-item .label{flex:1;font-weight:600}
+.cycle-item .desc{color:var(--muted);font-size:.82rem}
+
+/* ===== AGENT CARDS ===== */
+.agent-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+}
+.agent-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:28px 24px;
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.agent-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--blue),var(--purple));
+  opacity:0;transition:opacity .3s;
+}
+.agent-card:hover{border-color:rgba(0,212,255,.4);transform:translateY(-4px)}
+.agent-card:hover::before{opacity:1}
+.agent-icon{
+  width:52px;height:52px;border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,rgba(0,212,255,.15),rgba(123,47,255,.15));
+  border:1px solid rgba(0,212,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:18px;font-size:1.4rem;
+}
+.agent-name{font-weight:700;font-size:1rem;margin-bottom:6px}
+.agent-role{font-size:.78rem;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.agent-desc{font-size:.88rem;color:var(--muted);line-height:1.65;margin-bottom:16px}
+.agent-outputs{
+  background:var(--bg2);border-radius:var(--radius-sm);
+  padding:12px 14px;border:1px solid var(--border);
+}
+.agent-outputs .label{font-size:.7rem;color:var(--dim);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+.agent-outputs li{
+  font-size:.8rem;color:var(--text);padding:3px 0;
+  list-style:none;display:flex;align-items:center;gap:6px;
+}
+.agent-outputs li::before{content:'✓';color:var(--green);font-size:.7rem}
+
+/* ===== TOKENOMICS ===== */
+.toko-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.allocation-table{width:100%;border-collapse:collapse}
+.allocation-table th,.allocation-table td{
+  padding:12px 16px;text-align:left;border-bottom:1px solid var(--border);
+  font-size:.9rem;
+}
+.allocation-table th{color:var(--muted);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.5px}
+.allocation-table td:nth-child(2){font-weight:700;color:var(--blue);font-family:'Space Grotesk',monospace}
+.bar-cell{width:120px}
+.bar{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;margin-top:6px}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--purple))}
+.yield-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:28px;
+}
+.yield-box h3{font-size:1.1rem;font-weight:700;margin-bottom:16px}
+.yield-stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.yield-stat{background:var(--bg2);padding:16px;border-radius:var(--radius-sm);text-align:center}
+.yield-stat .val{font-size:1.4rem;font-weight:800;color:var(--green);font-family:'Space Grotesk',monospace}
+.yield-stat .lbl{font-size:.72rem;color:var(--muted);text-transform:uppercase;margin-top:4px}
+.yield-note{font-size:.82rem;color:var(--muted);line-height:1.6}
+
+/* ===== ROADMAP ===== */
+.roadmap-timeline{position:relative;padding-left:32px}
+.roadmap-timeline::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:2px;background:linear-gradient(180deg,var(--blue),var(--purple));
+}
+.roadmap-item{
+  position:relative;margin-bottom:48px;padding:24px 28px;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);margin-left:24px;
+}
+.roadmap-item::before{
+  content:'';position:absolute;left:-38px;top:28px;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--blue);box-shadow:0 0 12px rgba(0,212,255,.5);
+}
+.roadmap-item.active::before{background:var(--green);box-shadow:0 0 12px rgba(16,185,129,.5)}
+.roadmap-item h3{font-size:1.05rem;font-weight:700;margin-bottom:4px}
+.roadmap-quarter{font-size:.75rem;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
+.roadmap-item p{font-size:.88rem;color:var(--muted);line-height:1.7;margin-bottom:14px}
+.roadmap-tasks{list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.roadmap-tasks li{
+  background:var(--bg2);border:1px solid var(--border);
+  padding:4px 12px;border-radius:99px;font-size:.78rem;color:var(--text);
+}
+.roadmap-tasks li.done{background:rgba(16,185,129,.15);border-color:rgba(16,185,129,.3);color:var(--green)}
+
+/* ===== TEAM ===== */
+.team-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:20px;
+}
+.team-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:28px 20px;text-align:center;
+  transition:all .3s;
+}
+.team-card:hover{border-color:var(--blue)}
+.team-avatar{
+  width:72px;height:72px;border-radius:50%;
+  margin:0 auto 16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;font-weight:800;
+  background:linear-gradient(135deg,rgba(0,212,255,.2),rgba(123,47,255,.2));
+  border:2px solid rgba(0,212,255,.3);
+}
+.team-card h3{font-size:1rem;font-weight:700;margin-bottom:4px}
+.team-role{font-size:.78rem;color:var(--blue);margin-bottom:10px}
+.team-bio{font-size:.82rem;color:var(--muted);line-height:1.6}
+
+/* ===== NEXT STEPS ===== */
+.steps-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:20px;
+}
+.step-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:28px;
+  display:flex;gap:20px;
+}
+.step-week{
+  flex-shrink:0;width:52px;height:52px;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:.75rem;color:#000;
+}
+.step-content h3{font-size:1rem;font-weight:700;margin-bottom:8px}
+.step-content p{font-size:.85rem;color:var(--muted);line-height:1.65}
+.step-tasks{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:5px}
+.step-tasks li{font-size:.8rem;color:var(--dim);padding-left:14px;position:relative}
+.step-tasks li::before{content:'•';position:absolute;left:0;color:var(--blue)}
+
+/* ===== CLOSING ===== */
+.closing{
+  background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);
+  text-align:center;padding:120px 0;
+}
+.closing h2{
+  font-family:'Orbitron',monospace;font-size:clamp(1.8rem,4vw,3rem);
+  font-weight:800;margin-bottom:20px;
+}
+.closing p{max-width:520px;margin:0 auto 40px;color:var(--muted);line-height:1.8}
+.contact-row{
+  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+  margin-bottom:40px;
+}
+.contact-pill{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--card);border:1px solid var(--border);
+  padding:10px 20px;border-radius:99px;font-size:.88rem;
+  color:var(--muted);
+}
+.contact-pill svg{width:16px;height:16px;color:var(--blue)}
+
+/* ===== DIVIDER ===== */
+.section-divider{
+  width:60px;height:3px;
+  background:linear-gradient(90deg,var(--blue),var(--purple));
+  border-radius:2px;margin-bottom:24px;
+}
+
+/* ===== SCROLL ANIMATIONS ===== */
+.reveal{opacity:0;transform:translateY(30px);transition:all .7s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;text-align:center}
+  .hero-left p.tagline{margin:0 auto 32px}
+  .metrics-grid{grid-template-columns:repeat(2,1fr)}
+  .agent-grid{grid-template-columns:repeat(2,1fr)}
+  .team-grid{grid-template-columns:repeat(2,1fr)}
+  .vision-grid,.toko-layout,.honesty-grid{grid-template-columns:1fr}
+  .steps-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+@media(max-width:600px){
+  .metrics-grid{grid-template-columns:1fr 1fr}
+  .agent-grid{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ===== GLITCH EFFECT ===== */
+.glitch{position:relative;display:inline-block}
+.glitch::before,.glitch::after{
+  content:attr(data-text);position:absolute;top:0;left:0;
+  width:100%;height:100%;
+}
+.glitch::before{
+  animation:glitch1 3s infinite linear;
+  color:var(--red);z-index:-1;clip-path:inset(0 0 80% 0);
+}
+.glitch::after{
+  animation:glitch2 3s infinite linear;
+  color:var(--blue);z-index:-2;clip-path:inset(80% 0 0 0);
+}
+@keyframes glitch1{
+  0%,100%{transform:none;opacity:0}
+  5%{transform:translate(-2px,1px);opacity:.8}
+  10%{transform:none;opacity:0}
+}
+@keyframes glitch2{
+  0%,100%{transform:none;opacity:0}
+  7%{transform:translate(2px,-1px);opacity:.8}
+  12%{transform:none;opacity:0}
+}
+
+/* ===== PRINT ===== */
+@media print{
+  .mesh-bg,#bg-canvas,nav{display:none}
+  section{opacity:1!important}
+  body{background:#fff;color:#000}
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- BACKGROUND -->
+<canvas id="bg-canvas"></canvas>
+<div class="mesh-bg"></div>
+
+<!-- NAVIGATION -->
+<nav>
+  <div class="nav-logo">
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="15" stroke="#00d4ff" stroke-width="1.5" opacity=".4"/>
+      <path d="M10 22V10l6 8 6-8v12" stroke="#00d4ff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="16" cy="10" r="2" fill="#7b2fff"/>
+    </svg>
+    FUNDIORA
+  </div>
+  <div class="nav-links">
+    <a href="#reality">Reality</a>
+    <a href="#vision">Vision</a>
+    <a href="#agents">Agents</a>
+    <a href="#tokenomics">Tokenomics</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#team">Team</a>
+    <a href="#next">Next Steps</a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="badge">
+          <span class="badge-dot"></span>
+          Live on Base — Uniswap V3
+        </div>
+        <h1>
+          <span class="glitch" data-text="FUNDIORA">FUNDIORA</span><br>
+          <span class="accent">Agent</span> <span class="purple">System</span>
+        </h1>
+        <p class="tagline">
+          6 autonomous AI agents running 24/7 — powering holder intelligence, community growth, and ecosystem coordination for $FUND on Base.
+        </p>
+        <div class="live-ticker">
+          <div class="ticker-label">$FUND Live Price</div>
+          <div class="ticker-price" id="ticker-price">$0.0000268</div>
+          <div class="ticker-meta">
+            <span>MCap: <strong id="ticker-mcap">$24,122</strong></span>
+            <span>LP: <strong id="ticker-liq">$15,089</strong></span>
+            <span>Holders: <strong>169</strong></span>
+          </div>
+        </div>
+        <div class="btn-group">
+          <a href="#agents" class="btn btn-primary">
+            Explore the System →
+          </a>
+          <a href="#roadmap" class="btn btn-outline">12-Month Roadmap</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="logo-wrap">
+          <div class="logo-glow"></div>
+          <!-- Rotating hex ring -->
+          <svg class="hex-ring" viewBox="0 0 320 320" fill="none">
+            <polygon points="160,20 280,90 280,230 160,300 40,230 40,90" stroke="#00d4ff" stroke-width="1" stroke-dasharray="6 6" opacity=".3"/>
+            <polygon points="160,40 260,100 260,220 160,280 60,220 60,100" stroke="#7b2fff" stroke-width="0.5" stroke-dasharray="4 8" opacity=".2"/>
+          </svg>
+          <!-- Main SVG Logo -->
+          <svg class="logo-svg" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="coinGrad" cx="40%" cy="35%" r="65%">
+                <stop offset="0%" stop-color="#1a3a5c"/>
+                <stop offset="50%" stop-color="#0a1a2e"/>
+                <stop offset="100%" stop-color="#040810"/>
+              </radialGradient>
+              <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#00d4ff" stop-opacity=".3"/>
+                <stop offset="100%" stop-color="#00d4ff" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="strokeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00d4ff"/>
+                <stop offset="100%" stop-color="#7b2fff"/>
+              </linearGradient>
+            </defs>
+            <!-- Outer glow -->
+            <circle cx="110" cy="110" r="105" fill="url(#glowGrad)"/>
+            <!-- Coin body -->
+            <circle cx="110" cy="110" r="95" fill="url(#coinGrad)" stroke="url(#strokeGrad)" stroke-width="2.5"/>
+            <!-- Inner ring -->
+            <circle cx="110" cy="110" r="82" stroke="#00d4ff" stroke-width="0.75" opacity=".25"/>
+            <!-- Hexagon circuit pattern -->
+            <polygon points="110,42 180,77 180,143 110,178 40,143 40,77" stroke="#00d4ff" stroke-width="0.75" fill="none" opacity=".2"/>
+            <line x1="110" y1="42" x2="110" y2="25" stroke="#00d4ff" stroke-width="0.75" opacity=".3"/>
+            <line x1="180" y1="77" x2="195" y2="65" stroke="#00d4ff" stroke-width="0.75" opacity=".3"/>
+            <line x1="180" y1="143" x2="195" y2="155" stroke="#00d4ff" stroke-width="0.75" opacity=".3"/>
+            <line x1="110" y1="178" x2="110" y2="195" stroke="#00d4ff" stroke-width="0.75" opacity=".3"/>
+            <line x1="40" y1="143" x2="25" y2="155" stroke="#00d4ff" stroke-width="0.75" opacity=".3"/>
+            <line x1="40" y1="77" x2="25" y2="65" stroke="#00d4ff" stroke-width="0.75" opacity=".3"/>
+            <!-- Letter F — stylized with circuit paths -->
+            <path d="M72 162 L72 58 L108 58" stroke="#00d4ff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <path d="M72 100 L100 100" stroke="#00d4ff" stroke-width="10" stroke-linecap="round" fill="none"/>
+            <!-- Circuit nodes -->
+            <circle cx="72" cy="58" r="5" fill="#7b2fff"/>
+            <circle cx="72" cy="162" r="4" fill="#00d4ff" opacity=".6"/>
+            <circle cx="72" cy="100" r="4" fill="#00d4ff" opacity=".6"/>
+            <circle cx="108" cy="58" r="5" fill="#00d4ff"/>
+            <circle cx="100" cy="100" r="5" fill="#00d4ff"/>
+            <!-- Small decorative dots -->
+            <circle cx="140" cy="75" r="3" fill="#7b2fff" opacity=".7"/>
+            <circle cx="155" cy="95" r="2" fill="#00d4ff" opacity=".5"/>
+            <circle cx="148" cy="140" r="2.5" fill="#00d4ff" opacity=".4"/>
+            <circle cx="80" cy="135" r="2" fill="#7b2fff" opacity=".5"/>
+            <!-- $FUND label -->
+            <text x="110" y="198" text-anchor="middle" fill="#6b7280" font-size="11" font-family="Inter,sans-serif" letter-spacing="3" font-weight="600">FUND</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== REALITY ===== -->
+<section id="reality" class="honesty-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">01 — The Situation</div>
+      <h2 class="section-title">Radical Transparency.<br>No Hype.</h2>
+      <p class="section-sub">Fundiora is a 10-month-old micro-cap with real infrastructure, a working product, and a small but genuine community. Here's the unvarnished truth.</p>
+    </div>
+
+    <div class="metrics-grid reveal">
+      <div class="metric-card">
+        <div class="metric-value">$24K</div>
+        <div class="metric-label">Market Cap</div>
+        <div class="metric-sub">Very early stage</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">$0.0000268</div>
+        <div class="metric-label">FUND Price</div>
+        <div class="metric-sub">Base + Uniswap V3</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">169</div>
+        <div class="metric-label">Holders</div>
+        <div class="metric-sub">Active wallets</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">~$15K</div>
+        <div class="metric-label">Liquidity</div>
+        <div class="metric-sub">10-year locked</div>
+      </div>
+    </div>
+
+    <div class="honesty-grid reveal">
+      <div class="honesty-card">
+        <div class="card-icon icon-warn">⚠</div>
+        <h3>What's Actually Wrong</h3>
+        <p>The core problem isn't the product — it's awareness and activity.</p>
+        <ul>
+          <li>$48 daily volume — essentially no real trading</li>
+          <li>401 Twitter followers with minimal engagement</li>
+          <li>No CoinGecko or CMC listing — invisible to new buyers</li>
+          <li>Yield program exists but needs automation</li>
+          <li>Social content is inconsistent and unfocused</li>
+          <li>No B2B partnerships or integrations</li>
+        </ul>
+      </div>
+      <div class="honesty-card">
+        <div class="card-icon icon-info">ℹ</div>
+        <h3>What's Actually Good</h3>
+        <p>The foundation is solid. The problem is execution depth.</p>
+        <ul>
+          <li>Legitimate team — Carl + Philip, Oslo (public LinkedIn)</li>
+          <li>10 months of runway, no rug narrative</li>
+          <li>Working holder dashboard with yield calculator</li>
+          <li>5% yearly yield program (unique for small caps)</li>
+          <li>10-year LP lock — shows long-term commitment</li>
+          <li>Clean contract — 1B supply, 100M burned, simple model</li>
+        </ul>
+      </div>
+      <div class="honesty-card">
+        <div class="card-icon icon-good">✓</div>
+        <h3>The Opportunity</h3>
+        <p>A micro-cap with infrastructure that most projects at this stage don't have.</p>
+        <ul>
+          <li>AI Agents on Base is a massive, growing narrative</li>
+          <li>FUND can become the utility token for agent services</li>
+          <li>Real product = credible pitch to partners</li>
+          <li>Low market cap = high upside potential</li>
+          <li>Community layer is the missing piece</li>
+        </ul>
+      </div>
+      <div class="honesty-card">
+        <div class="card-icon icon-info">⚡</div>
+        <h3>The Plan</h3>
+        <p>Three phases over 12 months. No vaporware.</p>
+        <ul>
+          <li>Phase 1: Consolidate — listing, dashboard, social</li>
+          <li>Phase 2: Automate — 6 agents, live infrastructure</li>
+          <li>Phase 3: Grow — partnerships, volume, utility</li>
+          <li>Each phase builds on the previous</li>
+          <li>Measurable milestones every quarter</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VISION ===== -->
+<section id="vision">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">02 — The Vision</div>
+      <h2 class="section-title">FUND: Infrastructure for the<br>Agent Economy on Base</h2>
+      <p class="section-sub">Not a meme. Not a meme-ception. A platform play with a real yield model and a concrete path to utility.</p>
+    </div>
+
+    <div class="vision-grid reveal">
+      <div class="vision-text">
+        <h3>The Core Thesis</h3>
+        <p>
+          AI agents need to be paid. They need infrastructure. They need coordination.
+          Right now, there's no clean way for an agent to receive, hold, and spend crypto earnings
+          with full on-chain transparency.
+        </p>
+        <p>
+          Fundiora is building that layer — starting with its own agent infrastructure,
+          and opening it up to the broader Base ecosystem.
+        </p>
+        <p>
+          $FUND isn't valuable because of speculation. It's valuable because
+          <strong style="color:var(--text)">every agent in the Fundiora ecosystem earns, holds, and transacts in FUND.</strong>
+          Utility creates demand. Demand creates price support.
+        </p>
+        <h3 style="margin-top:24px;color:var(--purple)">Why Base?</h3>
+        <p>
+          Base has the clearest regulatory standing of any L2. It's Coinbase's L2 — 
+          legible, compliant, and growing fast. The agent economy will emerge here first.
+          Fundiora is positioned to be the payment and coordination layer for that economy.
+        </p>
+      </div>
+      <div class="vision-visual">
+        <h3 style="font-size:.85rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:20px">The Value Cycle</h3>
+        <div class="cycle-diagram">
+          <div class="cycle-item">
+            <span class="dot" style="background:var(--blue)"></span>
+            <span class="label">Holder stakes FUND</span>
+            <span class="desc">Access yield + agent services</span>
+          </div>
+          <div class="cycle-item">
+            <span class="dot" style="background:var(--purple)"></span>
+            <span class="label">Agents provide services</span>
+            <span class="desc">Community, analytics, alerts, content</span>
+          </div>
+          <div class="cycle-item">
+            <span class="dot" style="background:var(--green)"></span>
+            <span class="label">Ecosystem grows</span>
+            <span class="desc">B2B partners pay in FUND</span>
+          </div>
+          <div class="cycle-item">
+            <span class="dot" style="background:var(--amber)"></span>
+            <span class="label">Treasury reinvests</span>
+            <span class="desc">Yield + liquidity + development</span>
+          </div>
+          <div class="cycle-item">
+            <span class="dot" style="background:var(--blue)"></span>
+            <span class="label">More holders, higher price</span>
+            <span class="desc">Cycle repeats with momentum</span>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding:14px;background:var(--bg2);border-radius:var(--radius-sm);border:1px solid var(--border)">
+          <div style="font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Target State — 12 Months</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <div style="font-size:1.4rem;font-weight:800;color:var(--blue)">500+</div>
+              <div style="font-size:.75rem;color:var(--muted)">Holders</div>
+            </div>
+            <div>
+              <div style="font-size:1.4rem;font-weight:800;color:var(--green)">$500K</div>
+              <div style="font-size:.75rem;color:var(--muted)">Market Cap</div>
+            </div>
+            <div>
+              <div style="font-size:1.4rem;font-weight:800;color:var(--purple)">5+</div>
+              <div style="font-size:.75rem;color:var(--muted)">B2B Partners</div>
+            </div>
+            <div>
+              <div style="font-size:1.4rem;font-weight:800;color:var(--amber)">6</div>
+              <div style="font-size:.75rem;color:var(--muted)">Live Agents</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== AGENTS ===== -->
+<section id="agents" style="background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%)">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">03 — The Agent System</div>
+      <h2 class="section-title">6 Agents.<br>1 Infrastructure Layer.</h2>
+      <p class="section-sub">Each agent is specialized, measurable, and built to solve a specific problem. Together they form the operational backbone of Fundiora.</p>
+    </div>
+
+    <div class="agent-grid reveal">
+      <!-- Agent 1 -->
+      <div class="agent-card">
+        <div class="agent-icon">📡</div>
+        <div class="agent-name">CommunityPulse</div>
+        <div class="agent-role">Sentiment & Social</div>
+        <div class="agent-desc">
+          Monitors Twitter, Telegram, and Discord for Fundiora mentions in real time. Tracks sentiment trends, flags negative discussions, and surfaces community hot topics before they escalate.
+        </div>
+        <div class="agent-outputs">
+          <div class="label">Outputs</div>
+          <ul>
+            <li>Daily sentiment score (0–100)</li>
+            <li>Alert when sentiment drops &gt;15%</li>
+            <li>Weekly community health report</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Agent 2 -->
+      <div class="agent-card">
+        <div class="agent-icon">📊</div>
+        <div class="agent-name">YieldVault</div>
+        <div class="agent-role">Treasury & Rewards</div>
+        <div class="agent-desc">
+          Tracks on-chain holder eligibility for the 5% yearly yield program. Calculates rewards based on held amount and duration. Feeds the dashboard in real time.
+        </div>
+        <div class="agent-outputs">
+          <div class="label">Outputs</div>
+          <ul>
+            <li>Live yield eligibility tracker</li>
+            <li>Quarterly reward calculations</li>
+            <li>Treasury balance reports</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Agent 3 -->
+      <div class="agent-card">
+        <div class="agent-icon">🚨</div>
+        <div class="agent-name">AlertBeacon</div>
+        <div class="agent-role">On-Chain Monitoring</div>
+        <div class="agent-desc">
+          Watches the FUND contract and LP pool for significant events: large transfers, new holder spikes, liquidity changes, unusual trading activity.
+        </div>
+        <div class="agent-outputs">
+          <div class="label">Outputs</div>
+          <ul>
+            <li>Telegram alerts for large txns (&gt;$500)</li>
+            <li>New holder notifications</li>
+            <li>Pool event log</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Agent 4 -->
+      <div class="agent-card">
+        <div class="agent-icon">✍️</div>
+        <div class="agent-name">ContentHub</div>
+        <div class="agent-role">Content & Posting</div>
+        <div class="agent-desc">
+          Manages the social content calendar. Generates post ideas based on community topics, tracks engagement, and maintains a consistent posting schedule across Twitter and Telegram.
+        </div>
+        <div class="agent-outputs">
+          <div class="label">Outputs</div>
+          <ul>
+            <li>12-week content calendar</li>
+            <li>Weekly engagement report</li>
+            <li>Auto-generated post drafts</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Agent 5 -->
+      <div class="agent-card">
+        <div class="agent-icon">💼</div>
+        <div class="agent-name">TreasuryMind</div>
+        <div class="agent-role">Finance & Transparency</div>
+        <div class="agent-desc">
+          Monitors the Fundiora treasury wallet on-chain. Tracks all inflows (tax, fees, rewards) and outflows (yield payments, development). Publishes transparent monthly reports.
+        </div>
+        <div class="agent-outputs">
+          <div class="label">Outputs</div>
+          <ul>
+            <li>Live treasury dashboard</li>
+            <li>Monthly financial reports</li>
+            <li>Yield sustainability model</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Agent 6 -->
+      <div class="agent-card">
+        <div class="agent-icon">🚀</div>
+        <div class="agent-name">GrowthGrid</div>
+        <div class="agent-role">Partnerships & Growth</div>
+        <div class="agent-desc">
+          Scans the Base ecosystem for potential partners — new token launches, protocol integrations, influencer collaborations. Qualifies opportunities and drafts outreach.
+        </div>
+        <div class="agent-outputs">
+          <div class="label">Outputs</div>
+          <ul>
+            <li>Weekly partnership shortlist</li>
+            <li>Outreach templates</li>
+            <li>Integration pitch deck</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Infrastructure Diagram -->
+    <div class="reveal" style="margin-top:48px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:36px">
+      <h3 style="font-size:.85rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:24px;text-align:center">Agent Infrastructure Architecture</h3>
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap">
+        <!-- FUND Contract -->
+        <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:12px 16px;text-align:center;min-width:120px">
+          <div style="font-size:.7rem;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Data Source</div>
+          <div style="font-weight:700;font-size:.85rem">FUND Contract</div>
+          <div style="font-size:.72rem;color:var(--muted)">On-chain</div>
+        </div>
+        <div style="color:var(--dim);font-size:1.5rem">→</div>
+        <!-- API Layer -->
+        <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:12px 16px;text-align:center;min-width:120px">
+          <div style="font-size:.7rem;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Aggregation</div>
+          <div style="font-weight:700;font-size:.85rem">GeckoTerminal API</div>
+          <div style="font-size:.72rem;color:var(--muted)">Real-time</div>
+        </div>
+        <div style="color:var(--dim);font-size:1.5rem">→</div>
+        <!-- Agent Hub -->
+        <div style="background:linear-gradient(135deg,rgba(0,212,255,.1),rgba(123,47,255,.1));border:1px solid rgba(0,212,255,.3);border-radius:var(--radius-sm);padding:12px 20px;text-align:center;min-width:140px">
+          <div style="font-size:.7rem;color:var(--purple);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Agent Hub</div>
+          <div style="font-weight:700;font-size:.85rem">6 Agents</div>
+          <div style="font-size:.72rem;color:var(--muted)">Node.js + Python</div>
+        </div>
+        <div style="color:var(--dim);font-size:1.5rem">→</div>
+        <!-- Dashboard -->
+        <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:12px 16px;text-align:center;min-width:120px">
+          <div style="font-size:.7rem;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Output</div>
+          <div style="font-weight:700;font-size:.85rem">Dashboard</div>
+          <div style="font-size:.72rem;color:var(--muted)">fundiora.com</div>
+        </div>
+        <div style="color:var(--dim);font-size:1.5rem">→</div>
+        <!-- Community -->
+        <div style="background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:12px 16px;text-align:center;min-width:120px">
+          <div style="font-size:.7rem;color:var(--green);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Delivery</div>
+          <div style="font-weight:700;font-size:.85rem">Telegram + X</div>
+          <div style="font-size:.72rem;color:var(--muted)">Alerts</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TOKENOMICS ===== -->
+<section id="tokenomics">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">04 — Tokenomics</div>
+      <h2 class="section-title">Simple. Transparent.<br>Built for Trust.</h2>
+      <p class="section-sub">No inflation, no vesting schedules for insiders, no mystery. A fixed supply and a straightforward yield model.</p>
+    </div>
+
+    <div class="toko-layout reveal">
+      <div>
+        <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:20px">Token Allocation</h3>
+        <table class="allocation-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Amount</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Circulating Supply</td>
+              <td>900,000,000</td>
+              <td class="bar-cell">
+                <div class="bar"><div class="bar-fill" style="width:90%"></div></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Permanent Burn</td>
+              <td>100,000,000</td>
+              <td class="bar-cell">
+                <div class="bar"><div class="bar-fill" style="width:10%;background:var(--purple)"></div></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Liquidity Pool</td>
+              <td>~50,000,000</td>
+              <td class="bar-cell">
+                <div class="bar"><div class="bar-fill" style="width:5%;background:var(--amber)"></div></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Treasury</td>
+              <td>~50,000,000</td>
+              <td class="bar-cell">
+                <div class="bar"><div class="bar-fill" style="width:5%;background:var(--green)"></div></div>
+              </td>
+            </tr>
+            <tr>
+              <td>Total Supply</td>
+              <td>1,000,000,000</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:28px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+            <div>
+              <div style="font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Contract</div>
+              <div style="font-size:.78rem;color:var(--blue);font-family:monospace;word-break:break-all">0xa02d9a9a...27086d9</div>
+            </div>
+            <div>
+              <div style="font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Chain</div>
+              <div style="font-size:.9rem;font-weight:700">Base (Ethereum L2)</div>
+            </div>
+            <div>
+              <div style="font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">DEX</div>
+              <div style="font-size:.9rem;font-weight:700">Uniswap V3 — 0.3% fee</div>
+            </div>
+            <div>
+              <div style="font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">LP Lock</div>
+              <div style="font-size:.9rem;font-weight:700;color:var(--green)">10 Years</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="yield-box">
+          <h3>5% Yearly Yield Program</h3>
+          <div class="yield-stats">
+            <div class="yield-stat">
+              <div class="val">5%</div>
+              <div class="lbl">Yearly Yield</div>
+            </div>
+            <div class="yield-stat">
+              <div class="val">100K</div>
+              <div class="lbl">Min. Holdings</div>
+            </div>
+            <div class="yield-stat">
+              <div class="val">10M</div>
+              <div class="lbl">Cap per Wallet</div>
+            </div>
+            <div class="yield-stat">
+              <div class="val">Quarterly</div>
+              <div class="lbl">Payout Schedule</div>
+            </div>
+          </div>
+          <p class="yield-note">
+            <strong style="color:var(--text)">How it works:</strong> Holders with 100K+ FUND earn 5% annually, capped at 10M FUND per wallet. Rewards are calculated on-chain and paid out manually from the treasury every quarter.
+          </p>
+        </div>
+
+        <div style="margin-top:20px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
+          <h3 style="font-size:.9rem;font-weight:700;margin-bottom:14px;color:var(--amber)">Sustainability Model</h3>
+          <p style="font-size:.85rem;color:var(--muted);line-height:1.7;margin-bottom:12px">
+            Yield is funded by a 2% transaction tax and the project treasury. At current market cap (~$24K), the program is small but manageable.
+          </p>
+          <p style="font-size:.85rem;color:var(--muted);line-height:1.7">
+            <strong style="color:var(--text)">As the market cap grows to $500K+</strong>, the treasury generates enough yield income to sustain the program indefinitely — without minting new tokens.
+          </p>
+          <div style="margin-top:14px;padding:12px;background:var(--bg2);border-radius:var(--radius-sm);border:1px solid var(--border)">
+            <div style="font-size:.75rem;color:var(--muted);margin-bottom:6px">Example: 1M FUND holder</div>
+            <div style="display:flex;justify-content:space-between;font-size:.88rem">
+              <span style="color:var(--muted)">Annual reward</span>
+              <span style="font-weight:700;color:var(--green)">50,000 FUND</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:.88rem;margin-top:4px">
+              <span style="color:var(--muted)">At $0.001 price</span>
+              <span style="font-weight:700;color:var(--green)">$50/year</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ROADMAP ===== -->
+<section id="roadmap" style="background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%)">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">05 — Roadmap</div>
+      <h2 class="section-title">12 Months.<br>Three Build Phases.</h2>
+      <p class="section-sub">Every quarter has a clear deliverable. No vaporware. No "TBA" without reason.</p>
+    </div>
+
+    <div class="roadmap-timeline reveal">
+      <div class="roadmap-item active">
+        <div class="roadmap-quarter">Q2 2026 — Phase 1: Consolidate</div>
+        <h3>Foundation First</h3>
+        <p>Ship the existing products properly, get listed on CoinGecko, and establish a consistent social presence before scaling.</p>
+        <ul class="roadmap-tasks">
+          <li class="done">Holder Dashboard deployed</li>
+          <li>CoinGecko listing submitted</li>
+          <li>CMC listing applied</li>
+          <li>12-week content calendar live</li>
+          <li>Telegram alerts bot live</li>
+          <li>Yield program automated (50%)</li>
+        </ul>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-quarter">Q3 2026 — Phase 2: Automate</div>
+        <h3>Agent Infrastructure Live</h3>
+        <p>Build and deploy all 6 agents. Open the platform for internal use first, then expand to B2B.</p>
+        <ul class="roadmap-tasks">
+          <li>CommunityPulse agent live</li>
+          <li>YieldVault agent live</li>
+          <li>AlertBeacon agent live</li>
+          <li>ContentHub agent live</li>
+          <li>TreasuryMind agent live</li>
+          <li>GrowthGrid agent live</li>
+          <li>Agent dashboard (fundiora.com/agents)</li>
+          <li>First B2B integration pitch</li>
+        </ul>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-quarter">Q4 2026 — Phase 3: Grow</div>
+        <h3>Ecosystem Expansion</h3>
+        <p>Turn agents into a platform. Get FUND integrated into other Base protocols. Push holder count and volume.</p>
+        <ul class="roadmap-tasks">
+          <li>3+ B2B partnerships live</li>
+          <li>FUND as payment for agent services</li>
+          <li>Holder count: 300+</li>
+          <li>Market cap: $200K+</li>
+          <li>Yield program fully automated</li>
+          <li>Agent marketplace (beta)</li>
+        </ul>
+      </div>
+
+      <div class="roadmap-item">
+        <div class="roadmap-quarter">Q1 2027 — Phase 4: Scale</div>
+        <h3>Proven Model. Replicate.</h3>
+        <p>The playbook is proven. Scale what works. Push for listings, partnerships, and mainstream visibility.</p>
+        <ul class="roadmap-tasks">
+          <li>5+ active B2B partners</li>
+          <li>500+ holders</li>
+          <li>$500K+ market cap</li>
+          <li>CoinGecko trending (target)</li>
+          <li>Agent marketplace public</li>
+          <li>Revenue: self-sustaining</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TEAM ===== -->
+<section id="team">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">06 — The Team</div>
+      <h2 class="section-title">Built by Operators.<br>Not Speculators.</h2>
+      <p class="section-sub">Real people, publicly verifiable, with skin in the game. No anonymous founders.</p>
+    </div>
+
+    <div class="team-grid reveal">
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,rgba(0,212,255,.2),rgba(0,212,255,.05))">CB</div>
+        <h3>Carl Bakke</h3>
+        <div class="team-role">Co-Founder — Product</div>
+        <p class="team-bio">
+          Oslo, Norway. Product vision, community building, and ecosystem partnerships. Public LinkedIn — verifiable.
+        </p>
+        <div style="margin-top:12px">
+          <a href="https://linkedin.com/in/carl-bakke" target="_blank" style="font-size:.78rem;color:var(--blue);text-decoration:none">LinkedIn →</a>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,rgba(123,47,255,.2),rgba(123,47,255,.05))">PP</div>
+        <h3>Philip Pettersen</h3>
+        <div class="team-role">Co-Founder — Engineering</div>
+        <p class="team-bio">
+          Oslo, Norway. Smart contracts, protocol integrations, and technical infrastructure. Public LinkedIn — verifiable.
+        </p>
+        <div style="margin-top:12px">
+          <a href="#" target="_blank" style="font-size:.78rem;color:var(--blue);text-decoration:none">LinkedIn →</a>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,rgba(16,185,129,.2),rgba(16,185,129,.05))">TE</div>
+        <h3>Tomas</h3>
+        <div class="team-role">Community Lead</div>
+        <p class="team-bio">
+          Germany. Community growth, Telegram coordination, social media strategy, and holder engagement.
+        </p>
+      </div>
+
+      <div class="team-card">
+        <div class="team-avatar" style="background:linear-gradient(135deg,rgba(245,158,11,.2),rgba(245,158,11,.05))">RG</div>
+        <h3>Roger</h3>
+        <div class="team-role">Agent Infrastructure</div>
+        <p class="team-bio">
+          AI agent systems, automation pipelines, tooling, and operational infrastructure for the agent layer.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NEXT STEPS ===== -->
+<section id="next" style="background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%)">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-label">07 — Next Steps</div>
+      <h2 class="section-title">Week 1–4 Action Plan</h2>
+      <p class="section-sub">The first month is about shipping what's ready and setting up the infrastructure for everything else.</p>
+    </div>
+
+    <div class="steps-grid reveal">
+      <div class="step-card">
+        <div class="step-week">W1</div>
+        <div class="step-content">
+          <h3>Listings & Visibility</h3>
+          <p>Get Fundiora on the地图. No new users can find it without CoinGecko.</p>
+          <ul class="step-tasks">
+            <li>Apply CoinGecko (free, ~2 weeks)</li>
+            <li>Apply CMC (free tier)</li>
+            <li>Submit to Uniswap tracking</li>
+            <li>Verify contract on GeckoTerminal</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-week">W2</div>
+        <div class="step-content">
+          <h3>Dashboard Launch</h3>
+          <p>Make the holder dashboard live and shareable. It's the clearest proof of product.</p>
+          <ul class="step-tasks">
+            <li>Deploy to fundiora.com/dashboard</li>
+            <li>Test yield calculator end-to-end</li>
+            <li>Write dashboard announcement post</li>
+            <li>Telegram announcement to community</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-week">W3</div>
+        <div class="step-content">
+          <h3>AlertBeacon Setup</h3>
+          <p>On-chain alerts for large transfers and new holders. Shows the community the agents are watching.</p>
+          <ul class="step-tasks">
+            <li>Set up Telegram bot (BotFather)</li>
+            <li>Connect to FUND contract events</li>
+            <li>Test threshold alerts ($500+)</li>
+            <li>Announce to holders</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-week">W4</div>
+        <div class="step-content">
+          <h3>Social Rhythm</h3>
+          <p>Lock in a consistent posting schedule. ContentHub starts here.</p>
+          <ul class="step-tasks">
+            <li>Launch 12-week content calendar</li>
+            <li>3 posts/week minimum on X</li>
+            <li>2 posts/week in Telegram</li>
+            <li>First community call / Spaces</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CLOSING ===== -->
+<section class="closing">
+  <div class="container">
+    <div class="reveal">
+      <h2>The infrastructure is ready.<br>The story is waiting.</h2>
+      <p>
+        Fundiora has real products, a real team, and a real opportunity.
+        The agent system turns what's currently a small community project into
+        a platform with compounding network effects.
+      </p>
+      <div class="contact-row">
+        <div class="contact-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+          fundiora.com
+        </div>
+        <div class="contact-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          @fundioratoken
+        </div>
+        <div class="contact-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          post@fundiora.com
+        </div>
+      </div>
+      <div class="btn-group" style="justify-content:center">
+        <a href="https://fundiora.com" target="_blank" class="btn btn-primary">Visit fundiora.com</a>
+        <a href="https://x.com/fundiora" target="_blank" class="btn btn-outline">Follow @fundiora</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CANVAS PARTICLES ===== -->
+<script>
+// Particle system — same quality as V3
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [], mouse = {x: -9999, y: -9999};
+const COLORS = ['#00d4ff','#7b2fff','#00ffcc','#4466ff'];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+window.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.size = Math.random() * 2 + 0.5;
+    this.speedX = (Math.random() - 0.5) * 0.4;
+    this.speedY = (Math.random() - 0.5) * 0.4;
+    this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+    this.alpha = Math.random() * 0.5 + 0.1;
+    this.fate = Math.random() < 0.03 ? 'die' : 'live';
+  }
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+    const dx = mouse.x - this.x, dy = mouse.y - this.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 100) {
+      const force = (100 - dist) / 100;
+      this.x -= (dx / dist) * force * 1.5;
+      this.y -= (dy / dist) * force * 1.5;
+      this.alpha = Math.min(0.8, this.alpha + 0.02);
+    } else {
+      this.alpha = Math.max(0.1, this.alpha - 0.005);
+    }
+    if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) {
+      if (this.fate === 'die') { this.reset(); } else { this.x = Math.random() * W; this.y = Math.random() * H; }
+    }
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = this.alpha;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+
+const COUNT = Math.min(80, Math.floor((W * H) / 12000));
+for (let i = 0; i < COUNT; i++) particles.push(new Particle());
+
+function drawLines() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = particles[i].color;
+        ctx.globalAlpha = (1 - dist / 120) * 0.15;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+      }
+    }
+  }
+}
+
+(function loop() {
+  ctx.clearRect(0, 0, W, H);
+  drawLines();
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(loop);
+})();
+</script>
+
+<!-- ===== SCROLL REVEAL ===== -->
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+<!-- ===== LIVE TICKER UPDATE ===== -->
+<script>
+async function updateTicker() {
+  try {
+    const r = await fetch('https://api.geckoterminal.com/api/v2/networks/base/pools/0xdb5df2ee10219015b207b055828076d9366d7fdb');
+    const d = await r.json();
+    const a = d.data.attributes;
+    const price = parseFloat(a.base_token_price_usd);
+    const liq = parseFloat(a.reserve_in_usd);
+    if (price > 0) {
+      document.getElementById('ticker-price').textContent = '$' + price.toFixed(8);
+    }
+    if (liq > 0) {
+      document.getElementById('ticker-liq').textContent = '$' + liq.toLocaleString('en-US', {maximumFractionDigits: 0});
+    }
+  } catch(e) {
+    // Keep showing static values on error
+  }
+}
+updateTicker();
+setInterval(updateTicker, 60000);
+</script>
+
+</body>
+</html>
