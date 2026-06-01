@@ -14,7 +14,8 @@ for scan_root in scan_roots:
 patterns = {
     'absolute-user-path': re.compile(r'/Users/[^\s\)\]"\']+'),
     'secret-assignment-like': re.compile(r'(?i)(api[_-]?key|secret|token|private[_-]?key|auth_token|ct0|seed phrase|mnemonic)\s*[:=]'),
-    'positive-reward-claim': re.compile(r'(?i)\b(guaranteed rewards?|staking yield|financial return|token price|listing confirmed|official endorsement)\b'),
+    'positive-reward-claim': re.compile(r'(?i)\b(guaranteed rewards?|guaranteed\s+yield|5%\s+yearly|staking yield|staking\s+rewards?|quarterly\s+reward|passive\s+income|financial return|token price|listing confirmed|official endorsement)\b'),
+    'endorsement-investment': re.compile(r'(?i)\b(coinbase-backed|base-backed|official\s+base\s+partner|endorsed\s+by\s+coinbase|coinbase\s+investment|base\s+investment|coinbase\s+backing|base\s+backing)\b'),
     'wallet-action': re.compile(r'(?i)\b(sign transaction|send transaction|fund wallet|seed phrase)\b'),
 }
 failures = []
