@@ -14,11 +14,20 @@ This note gives a concise public-safe record of the GitHub-visible staging work 
 
 ## What is already staged in this packet
 
-- static demo page (`index.html`)
-- Fundiora utility map (`fundiora-utility-map.md`)
-- public safety boundaries (`public-safety-boundaries.md`)
-- launch/share-link review checklist (`launch-review-checklist.md`)
+- static demo page ([`index.html`](index.html))
+- Fundiora utility map ([`fundiora-utility-map.md`](fundiora-utility-map.md))
+- public safety boundaries ([`public-safety-boundaries.md`](public-safety-boundaries.md))
+- launch/share-link review checklist ([`launch-review-checklist.md`](launch-review-checklist.md))
+- packet overview ([`README.md`](README.md))
 - sanitized screenshot asset (`assets/fundiora-v0.3-preview.png`)
+
+## Quick packet links
+
+- [Open the staging page](index.html)
+- [Open the utility map](fundiora-utility-map.md)
+- [Open the safety boundaries](public-safety-boundaries.md)
+- [Open the launch/share checklist](launch-review-checklist.md)
+- [Open the packet overview](README.md)
 
 ## Verification discipline
 
