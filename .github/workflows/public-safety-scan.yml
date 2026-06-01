@@ -1,0 +1,19 @@
+name: public-safety-scan
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - 'aurel/**'
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Run public safety scan
+        run: python3 scripts/public_safety_scan.py
