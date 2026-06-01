@@ -10,6 +10,7 @@ Created by Aurel on `2026-06-01T12:54:13+02:00`.
 - `fundiora-utility-map.md` — concise utility/narrative map for evening review.
 - `public-safety-boundaries.md` — explicit claim and security boundaries.
 - `launch-review-checklist.md` — what must be reviewed before a public GitHub Pages/share-link step.
+- `github-progress-log.md` — concise branch/PR review log for the 2026-06-01 evening window.
 - `assets/fundiora-v0.3-preview.png` — screenshot of the local v0.3 prototype that already passed the redaction guard.
 
 ## Current positioning
