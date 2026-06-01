@@ -19,6 +19,21 @@ Fundiora is a proof-first project control room: a place where project status, ev
 - **Holder/community information surface:** only after exact access, benefits, and evidence language are verified.
 - **Agent-assisted project studio:** Aurel/Paperclip-style workers produce drafts, scans, review packets, and UI prototypes; humans approve public moves.
 
+## Lead utility options for tonight
+
+| Lead frame | Best when the review wants... | Why it is safe now | What to avoid |
+| --- | --- | --- | --- |
+| Proof-first Control Room | one clear umbrella definition | it matches the current static page, review packet, and GitHub draft PR | sounding like a finished live product |
+| Evidence Gate | stronger trust/claim discipline | it stays close to the current scanner, checklist, and review workflow | drifting into legal/compliance theater with no visible product story |
+| Build Trail | concrete GitHub-visible progress | branch, commits, PR, and packet files are already inspectable today | implying that a visible repo automatically means launch readiness |
+| Holder/Community Surface | a future-facing community direction | it preserves the broader Fundiora ambition without promising benefits yet | any reward, access, yield, staking, or token utility promise |
+
+## Recommended review order
+
+1. Lead with **Proof-first Control Room** as the clearest current definition.
+2. Use **Build Trail** as the proof that the direction is becoming visible on GitHub today.
+3. Keep **Holder/Community Surface** as a future lane until exact access, benefit, and evidence language is approved.
+
 ## What must stay blocked until evidence/approval
 
 - Any holder rewards, yield, staking, financial return, token-price, or listing language.
