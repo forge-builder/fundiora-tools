@@ -29,6 +29,14 @@ Before each branch update, the staging packet is expected to pass:
 3. normal git diff/commit review on the same branch
 4. draft PR check review before any merge or public-link decision
 
+## 20:00–21:00 review route
+
+1. Open PR #1 and confirm the branch is still draft-only and the safety scan is green.
+2. Read `index.html` first to judge the visual direction and whether **proof-first project control room** is the right lead frame.
+3. Read `fundiora-utility-map.md` next to choose which utility should lead the narrative.
+4. Check `public-safety-boundaries.md` and `launch-review-checklist.md` before approving any broader share/demo step.
+5. End with the PR timeline and decide whether the next move is: keep tightening staging wording, prepare a narrower public-safe mini-site, or hold the branch at review.
+
 ## Evening review questions
 
 1. Is **proof-first project control room** the right lead definition for Fundiora?
