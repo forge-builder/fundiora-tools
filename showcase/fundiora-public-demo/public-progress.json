@@ -1,26 +1,30 @@
 {
-  "schema": "fundiora.public-demo.clean.v0.2",
-  "generated_at": "2026-06-03 11:00 CEST",
-  "status": "clean public-candidate draft; not published",
-  "positioning": "Fundiora / FUND as one project identity: project snapshot, evidence gate, roadmap under review.",
+  "schema": "fundiora-public-candidate-v0.3",
+  "generated_at": "2026-06-03T22:45:00+02:00",
+  "status": "hybrid public-candidate draft; not published",
+  "positioning": {
+    "identity": "Fundiora is the project/name; FUND is the token ticker. Treat as one Fundiora/FUND identity, not separate products.",
+    "public_direction": "Base-native project surface with build trail, utility roadmap under review, and evidence-backed updates.",
+    "tone": "hybrid: safer than hype copy, warmer and more utility-oriented than v0.2"
+  },
   "public_candidate_sections": [
-    "project snapshot",
-    "evidence gate",
-    "roadmap under review",
-    "showable build trail"
+    "one identity",
+    "public surface",
+    "utility lanes not empty promises",
+    "showable build trail",
+    "decision gate"
   ],
-  "excluded_from_public_copy": [
-    "private workspace details",
-    "local notes not approved for publication",
-    "reward/yield/staking/payout promises",
-    "listing, price, or market-outcome claims",
-    "partner or ecosystem endorsement claims",
-    "wallet, signing, swapping, bridging, or transaction actions"
+  "internal_only_detail": [
+    "specific economic mechanisms",
+    "channel strategy",
+    "access thresholds",
+    "ecosystem assertions",
+    "private operator tooling"
   ],
+  "approval_gate": "No Pages deploy, public link, admin send, social post, external action, or exact public utility claim without Ezziee/board final approval.",
   "visible_assets": [
     "assets/fundiora-logo.png",
     "assets/hero-loop-composite-candidate.png",
     "assets/full-page-review-candidate.png"
-  ],
-  "approval_gate": "Public link, admin send, social post, or Pages publish requires explicit final approval after claim-safety pass."
+  ]
 }
