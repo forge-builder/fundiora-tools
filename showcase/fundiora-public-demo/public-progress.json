@@ -1,28 +1,26 @@
 {
-  "schema": "fundiora.public-demo.progress.v0.1",
-  "generated_at": "2026-06-02 22:18:19 CEST",
-  "source": "Aurel local operator verification",
-  "paperclip_total": 140,
-  "paperclip_issue_counts": {
-    "blocked": 3,
-    "cancelled": 3,
-    "done": 131,
-    "in_review": 3
-  },
-  "live_runs": 0,
-  "visible_surfaces": [
-    {
-      "label": "Fundiora public-demo draft",
-      "path": "showcase/fundiora-public-demo/index.html"
-    },
-    {
-      "label": "Public safety scanner",
-      "path": "scripts/public_safety_scan.py"
-    },
-    {
-      "label": "GitHub draft PR #1",
-      "path": "https://github.com/forge-builder/fundiora-tools/pull/1"
-    }
+  "schema": "fundiora.public-demo.clean.v0.2",
+  "generated_at": "2026-06-03 11:00 CEST",
+  "status": "clean public-candidate draft; not published",
+  "positioning": "Fundiora / FUND as one project identity: project snapshot, evidence gate, roadmap under review.",
+  "public_candidate_sections": [
+    "project snapshot",
+    "evidence gate",
+    "roadmap under review",
+    "showable build trail"
   ],
-  "claim_boundary": "This data confirms local production/staging activity only. It does not approve public claims, rewards, listings, financial promises, wallet actions, or Base/Coinbase endorsement language."
+  "excluded_from_public_copy": [
+    "private workspace details",
+    "local notes not approved for publication",
+    "reward/yield/staking/payout promises",
+    "listing, price, or market-outcome claims",
+    "partner or ecosystem endorsement claims",
+    "wallet, signing, swapping, bridging, or transaction actions"
+  ],
+  "visible_assets": [
+    "assets/fundiora-logo.png",
+    "assets/hero-loop-composite-candidate.png",
+    "assets/full-page-review-candidate.png"
+  ],
+  "approval_gate": "Public link, admin send, social post, or Pages publish requires explicit final approval after claim-safety pass."
 }
