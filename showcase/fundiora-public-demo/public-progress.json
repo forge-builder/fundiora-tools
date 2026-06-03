@@ -12,7 +12,14 @@
     "public surface",
     "utility lanes not empty promises",
     "showable build trail",
+    "tonight's review dock",
     "decision gate"
+  ],
+  "reviewer_route_tonight": [
+    "confirm the public surface explains one Fundiora/FUND identity without splitting into separate products",
+    "confirm sensitive utility, economics, and operator tooling remain internal-only review lanes",
+    "choose one bounded next step: wording, visual polish, or internal proof-lane specification",
+    "hold public distribution until final approval"
   ],
   "internal_only_detail": [
     "specific economic mechanisms",
