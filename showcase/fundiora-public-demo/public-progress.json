@@ -1,0 +1,37 @@
+{
+  "schema": "fundiora-public-candidate-v0.3",
+  "generated_at": "2026-06-03T22:45:00+02:00",
+  "status": "hybrid public-candidate draft; not published",
+  "positioning": {
+    "identity": "Fundiora is the project/name; FUND is the token ticker. Treat as one Fundiora/FUND identity, not separate products.",
+    "public_direction": "Base-native project surface with build trail, utility roadmap under review, and evidence-backed updates.",
+    "tone": "hybrid: safer than hype copy, warmer and more utility-oriented than v0.2"
+  },
+  "public_candidate_sections": [
+    "one identity",
+    "public surface",
+    "utility lanes not empty promises",
+    "showable build trail",
+    "tonight's review dock",
+    "decision gate"
+  ],
+  "reviewer_route_tonight": [
+    "confirm the public surface explains one Fundiora/FUND identity without splitting into separate products",
+    "confirm sensitive utility, economics, and operator tooling remain internal-only review lanes",
+    "choose one bounded next step: wording, visual polish, or internal proof-lane specification",
+    "hold public distribution until final approval"
+  ],
+  "internal_only_detail": [
+    "specific economic mechanisms",
+    "channel strategy",
+    "access thresholds",
+    "ecosystem assertions",
+    "private operator tooling"
+  ],
+  "approval_gate": "No Pages deploy, public link, admin send, social post, external action, or exact public utility claim without Ezziee/board final approval.",
+  "visible_assets": [
+    "assets/fundiora-logo.png",
+    "assets/hero-loop-composite-candidate.png",
+    "assets/full-page-review-candidate.png"
+  ]
+}
